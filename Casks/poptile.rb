@@ -1,6 +1,6 @@
 cask "poptile" do
-  version "0.5.2"
-  sha256 "5ba1d58da1847c61b38562d2f2c7b7860242af789660a5b62890576a5409564e"
+  version "0.5.3"
+  sha256 "7a64b74c88140282341cff6bc12c350e7b16ed86b6040496edbb4435e10bc676"
 
   url "https://github.com/alesculek/PopTile/releases/download/v#{version}/PopTile-v#{version}-macos-arm64.zip"
   name "PopTile"
