@@ -1,6 +1,6 @@
 cask "poptile" do
   version "0.5.1"
-  sha256 "7a978b4a90d1a44583ea48c3f64edbd994afd1b9918a16e898fc680da10e657b"
+  sha256 "8b34db6182874c2b7338a5e526a32871a16777ec32a2173886c07ee95e52ced5"
 
   url "https://github.com/alesculek/PopTile/releases/download/v#{version}/PopTile-v#{version}-macos-arm64.zip"
   name "PopTile"
@@ -17,6 +17,15 @@ cask "poptile" do
     system_command "/usr/bin/xattr",
                    args: ["-cr", "#{appdir}/PopTile.app"],
                    sudo: false
+    # Re-sign with "PopTile Dev" cert if available in login keychain.
+    # This preserves TCC accessibility permissions across reinstalls
+    # (ad-hoc signatures change every build, causing TCC to revoke access).
+    # For users without the cert, the ad-hoc signature still works — they
+    # just need to re-grant accessibility permission after each update.
+    system_command "/usr/bin/codesign",
+                   args: ["--force", "--deep", "--sign", "PopTile Dev", "#{appdir}/PopTile.app"],
+                   sudo: false,
+                   must_succeed: false
   end
 
   zap trash: [
